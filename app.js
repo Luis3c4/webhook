@@ -1,6 +1,6 @@
 // Import Express.js
 const express = require('express');
-
+require('dotenv').config();
 // Create an Express app
 const app = express();
 
@@ -12,6 +12,10 @@ const port = process.env.PORT || 3000;
 const verifyToken = process.env.VERIFY_TOKEN;
 
 // Route for GET requests
+if (!verifyToken) {
+  console.error('Error: VERIFY_TOKEN is not set in the environment variables.');
+  process.exit(1);
+}
 app.get('/', (req, res) => {
   const { 'hub.mode': mode, 'hub.challenge': challenge, 'hub.verify_token': token } = req.query;
 
